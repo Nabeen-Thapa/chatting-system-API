@@ -4,6 +4,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
+import { RedisModule } from './redis/redis.module';
 import mikroOrmConfig from './config/orm.config';
 
 @Module({
@@ -11,14 +12,8 @@ import mikroOrmConfig from './config/orm.config';
     ConfigModule.forRoot({ isGlobal: true }),  // loads .env
     MikroOrmModule.forRoot(mikroOrmConfig),    // correct config
     AuthModule,
-    ConfigModule.forRoot({
-      isGlobal: true,
-      // validationSchema: Joi.object({
-      //   PORT: Joi.number().default(3000),
-      //   DATABASE_URL: Joi.string().required(),
-      //   JWT_SECRET: Joi.string().required(),
-      // }),
-    }),
+    ConfigModule.forRoot({isGlobal: true,}),
+    RedisModule,
   ],
 
   controllers: [AppController],

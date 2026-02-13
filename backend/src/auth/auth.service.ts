@@ -16,6 +16,7 @@ constructor(
 
    async login(loginDto: LoginDto) {
     const user= await this.userService.login(loginDto);
+    console.log(loginDto)
     return user;
   }
 

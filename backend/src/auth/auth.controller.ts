@@ -4,7 +4,7 @@ import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/create-user.dto';
 import { LoginDto } from './dto/login-user.dto';
 import { setAuthCookies } from './utils/authCookie.utils';
-import { CurrentUser } from './decorators/current-user.decorator';
+import { CurrentUser } from '../common/decorators/current-user.decorator';
 import { JwtAuthGuard } from './jwt/jwt.guard';
 
 @Controller('user/auth')

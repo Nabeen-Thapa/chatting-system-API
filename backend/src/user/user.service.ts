@@ -9,6 +9,7 @@ import { LoginDto } from '../auth/dto/login-user.dto';
 import { RedisService } from '../redis/redis.service';
 import * as bcrypt from 'bcrypt';
 import { signAccessToken, signRefreshToken } from '../auth/utils/jwt.utils';
+import { Console } from 'console';
 
 @Injectable()
 export class UserService {
@@ -81,8 +82,15 @@ export class UserService {
     };
   }
 
-  findAll() {
-    return `This action returns all user`;
+  async findAll() {
+    const users = await this.em.findAll(User);
+    return users.map(user => ({
+    id: user.id,
+    name: user.name,
+    email: user.email,
+    phone: user.phone,
+    profileImage: user.profileImage,
+  }));
   }
 
   findOne(id: number) {

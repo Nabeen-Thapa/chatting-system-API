@@ -17,6 +17,11 @@ export class FriendRequestController {
     return this.friendRequestService.findAll();
   }
 
+  @Delete(':id')
+  reject(@Param('id') id: string) {
+    return this.friendRequestService.remove(+id);
+  }
+
   @Post()
   pending() {
     return this.friendRequestService.findAll();
@@ -27,6 +32,7 @@ export class FriendRequestController {
     return this.friendRequestService.findAll();
   }
 
+  //sender can cancel reuqest
   @Post()
   cancel() {
     return this.friendRequestService.findAll();
@@ -35,10 +41,5 @@ export class FriendRequestController {
   @Get()
   View() {
     return this.friendRequestService.findAll();
-  }
-
-  @Delete(':id')
-  reject(@Param('id') id: string) {
-    return this.friendRequestService.remove(+id);
-  }
+  } 
 }

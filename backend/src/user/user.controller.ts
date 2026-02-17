@@ -13,9 +13,11 @@ export class UserController {
     return this.userService.create(createUserDto);
   }
 
-  @Get()
+  @Get("all")
   findAll() {
-    return this.userService.findAll();
+    const users = this.userService.findAll();
+    console.log("user constroller find all: ", users);
+    return users;
   }
 
   @Get(':id')

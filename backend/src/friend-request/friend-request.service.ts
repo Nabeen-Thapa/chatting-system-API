@@ -59,7 +59,26 @@ export class FriendRequestService {
 
   }
 
-  async accept() {
+  async accept(senderId: string, receiverId: string) {
+    const sender = await this.em.findOne(User, { id: senderId })
+    const receiver = await this.em.findOne(User, { id: receiverId })
+    if (!sender || !receiver) throw new NotFoundException('User not found');
+
+    const request = await this.em.findOne(FriendRequest,
+      { sender, receiver, status: FriendRequestStatus.PENDING, })
+
+    if (!request) throw new NotFoundException('Friend request not found or already handled');
+    request.status = FriendRequestStatus.ACCEPTED;
+    request.updatedAt = new Date();
+
+    await this.em.persistAndFlush(request);
+
+    return {
+      message: 'Friend request accepted',
+      request,
+    };
+
+
     return `This action returns all friendRequest`;
   }
 

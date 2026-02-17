@@ -10,24 +10,23 @@ export class FriendRequestController {
 
   @Post("send")
   send(@Body() createFriendRequestDto: CreateFriendRequestDto, @Req() req: Request) {
-    if(!req.user) throw new UnauthorizedException("you are not authorized")
+    if (!req.user) throw new UnauthorizedException("you are not authorized")
     const senderId = (req.user as any).userId;
     return this.friendRequestService.send(createFriendRequestDto, senderId);
   }
-  
+
   @Get("requests")
   View(@Req() req: Request) {
-       if(!req.user) throw new UnauthorizedException("you are not authorized")
+    if (!req.user) throw new UnauthorizedException("you are not authorized")
     const currentUser = (req.user as any).userId;
-  console.log("fr req con:", currentUser)
     return this.friendRequestService.viewReceivedRequests(currentUser);
-  } 
+  }
 
-  @Post()
-  accept(@Req() req: Request) {
-    if(!req.user) throw new UnauthorizedException("you are not authorized")
-
-    return this.friendRequestService.accept();
+  @Post("accept/:senderId")
+  accept(@Param('senderId') senderId: string, @Req() req: Request) {
+    if (!req.user) throw new UnauthorizedException("you are not authorized")
+    const receiverId = (req.user as any).userId;
+    return this.friendRequestService.accept(senderId, receiverId);
   }
 
   @Delete(':id')
